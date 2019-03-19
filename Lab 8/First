@@ -1,0 +1,202 @@
+
+/*
+    Name :: Abhishek Ranjan
+    Roll No :: 17CO203
+    OOPS lab First one
+    Pizza-Hut Delivery System
+ */
+
+
+
+package com.company;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class item{
+    float calories,price,combo,fat,protiens,carbo;
+    String name;
+
+    int cal_fat = 9;
+    int cal_carb = 4;
+    int eat=0;
+
+    public item(String name,float price, float combo, float fat, float protiens, float carbo,int eat) {
+        this.price = price;
+        this.combo = combo;
+        this.fat = fat;
+        this.protiens = protiens;
+        this.carbo = carbo;
+        this.name=name;
+        this.eat = eat;
+    }
+
+    public float getCalories() {
+        calories = 4*protiens+4*carbo+9*fat;
+        return calories;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getEat() {
+        return eat;
+    }
+}
+
+
+public class Ranjan {
+
+    public static void main(String[] args) {
+        // write your code here
+        System.out.println("Enter \n1.For eat-in\n2.For take-away\n");
+
+
+
+        //date and time
+        int ac=0;
+        ArrayList<item> allItem = new ArrayList<>();
+        ArrayList<item> inde = new ArrayList<>();
+        ArrayList<item> drink = new ArrayList<>();
+        ArrayList<item> salad = new ArrayList<>();
+        item pizza = new item("Pizza",200,0,30,10,5,1);
+        item burger = new item("Burger",150,0,20,1,2,1);
+        item dosa = new item("Dosa",100,0,10,10,10,0);
+        allItem.add(pizza);
+        allItem.add(burger);
+        allItem.add(dosa);
+
+        item almonds = new item("almonds",20,0,10,10,10,1);
+        item kaju = new item("Kaju",20,0,5,5,5,1);
+        inde.add(almonds);
+        inde.add(kaju);
+
+        item pepsi = new item("Pepsi",50,0,30,10,2,1);
+        item limca = new item("Limca",40,0,20,10,5,1);
+        drink.add(pepsi);
+        drink.add(limca);
+
+        item carrot = new item("Carrot",10,0,2,2,2,1);
+        item onion = new item("Onion",15,0,5,2,2,1);
+        salad.add(carrot);
+        salad.add(onion);
+
+        ArrayList<item> order = new ArrayList<>();
+        Scanner in = new Scanner(System.in);
+        int n = Integer.parseInt(in.nextLine());
+        switch (n){
+
+            case 1:
+                System.out.println("Enter \n1.For AC\n2.For Non-AC\n");
+                ac = Integer.parseInt(in.nextLine());
+                break;
+            case 2:
+                break;
+
+            default:
+                System.out.println("Invalid Input\n");
+                System.exit(0);
+
+        }
+
+        while (true){
+            System.out.println("Choose any\n1.Order new item\n2.Complete order\n3.Order drink\n4.Order Salad");
+            int n3 = Integer.parseInt(in.nextLine());
+
+
+            switch (n3){
+
+                case 1:
+                    System.out.println("List of items are\n");
+                    for (int i=0;i<allItem.size();i++){
+                        System.out.println(i+1 + ". "+ allItem.get(i).getName() + "Price : " +allItem.get(i).getPrice() + "calories:" + allItem.get(i).getCalories());
+                    }
+                    int n4 = Integer.parseInt(in.nextLine());
+                    if(allItem.get(n4-1).getEat()==1)
+                        order.add(allItem.get(n4-1));
+                    else
+                        System.out.println("It is for take away only");
+                    while (true) {
+                        System.out.println("Press -1 when all ingredients are added\nChoose any ingredients(Price of each is 20)\n");
+                        for (int i = 0; i < inde.size(); i++) {
+                            System.out.println(i + 1 + ". " + inde.get(i).getName() );
+                        }
+                        //int flag1=0;
+                        int n5 = Integer.parseInt(in.nextLine());
+                        if (n5==-1)
+                            break;
+                        order.add(inde.get(n5 - 1));
+                    }
+                    break;
+                case 2:
+
+                    float total_price =0;
+                    float total_cal=0;
+
+                    for (int i=0;i<order.size();i++){
+                        System.out.println("Name: " + order.get(i).getName() + "Price: " + order.get(i).getPrice() +" Calories: " + order.get(i).getCalories());
+                        total_cal += order.get(i).getCalories();
+                        total_price += order.get(i).getPrice();
+                    }
+
+                    if(ac==1)
+                        total_price += 100;
+
+                    if (n==2)
+                        total_price= total_price * 11/10;
+
+                    System.out.println("Total price: " + total_price);
+                    System.out.println("Total calories: " + total_cal);
+
+
+                    System.exit(0);
+
+                case 3:
+                    System.out.println("Choose any drink");
+                    for (int i=0;i<drink.size();i++){
+                        System.out.println(i+1+". " + drink.get(i).getName() + "Price: " +drink.get(i).getPrice() + "calories: "+drink.get(i).getCalories());
+                    }
+                    int n6 = Integer.parseInt(in.nextLine());
+
+                    if (n6<=drink.size())
+                        order.add(drink.get(n6-1));
+
+                    if (n==1){
+                        System.out.println("Choose \n1.For cold\n2.For room temperature drink");
+                        int n7 = Integer.parseInt(in.nextLine());
+                    }
+
+                    break;
+
+                case 4:
+                    if(n==2){
+                        System.out.println("Salad not available for take in orders");
+                        break;
+                    }
+                    for (int i=0;i<salad.size();i++){
+                        System.out.println(i+1 + ". " + salad.get(i).getName());
+                    }
+                    int n8 = Integer.parseInt(in.nextLine());
+
+                    order.add(salad.get(n8-1));
+
+
+            }
+
+
+
+        }
+
+
+
+
+    }
+}
